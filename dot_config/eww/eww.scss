@@ -1,0 +1,71 @@
+// Global
+*{
+  all: unset;
+}
+
+// Variable Color's
+$background: #1A1B26;
+$foreground: #A9B1D6;
+
+$black: #24283B;
+$gray: #565F89;
+$red: #F7768E;
+$green: #73DACA;
+$yellow: #E0AF68;
+$blue: #7AA2F7;
+$magenta: #BB9AF7;
+$cyan: #7DCFFF;
+$white: $foreground;
+
+// EWW BAR
+.bar{
+  background-color: $background;
+  padding: .3rem;
+}
+
+.systray{
+  font-weight: bold;
+  background-color: $black;
+  color: $white;
+  border-radius: 5px;
+}
+
+.clock{
+  font-weight: bold;
+  font-size: 1.2em;
+  background-color: $black;
+  color: $cyan;
+  border-radius: 5px;
+  padding: .7rem 0 .5rem 0;
+  margin: .5rem 0 .5rem 0;
+}
+
+.control{
+  background-color: $black;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.volume-icon{
+  margin: .2rem 0 .2rem 0;
+  color: $green;
+}
+
+.brightness-icon{
+  margin: .2rem 4 .2rem 0;
+  color: $yellow;
+}
+
+scale trough {
+  all: unset;
+  background-color: $background;
+  border-radius: 5px;
+  min-height: 80px;
+  min-width: 10px;
+  margin: .3rem 0 .3rem 0;
+}
+
+.volume-bar trough highlight {
+  background-color: $green;
+  border-radius: 5px;
+}

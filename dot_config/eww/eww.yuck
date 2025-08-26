@@ -1,0 +1,141 @@
+(defvar eww "/usr/bin/eww -c $HOME/.config/eww/")
+
+;;;;;;;;;;;;;
+;; WINDOWS ;;
+;;;;;;;;;;;;;
+
+(defwindow bar
+  :monitor 0
+  :geometry (geometry :x "0"
+                      :y "0"
+                      :height "100%"
+                      :width "40px"
+                      :anchor "left center")
+  :wm-ignore false
+  :stacking "bg"
+  :exclusive true
+  :reserve (struts  :distance "35px" 
+                    :side "left")
+  :hexpand "false"
+	:vexpand "false"
+
+(bar))
+
+;;;;;;;;;;;;;
+;; WIDGETS ;;
+;;;;;;;;;;;;;
+
+;; BAR WIDGET ;;
+(defwidget bar []
+  (box  :orientation "vertical"
+        :class "bar"
+        :halign "center"
+
+  (systray)
+  (clock)
+  (control)))
+
+;; SYSTRAY WIDGETS ;;
+
+(defwidget systray-box []
+  (box      :orientation "vertical"
+            :class "systray"
+            :halign "center"
+            :valign "start"
+            :space-evenly false
+  (systray  :spacing: 3
+            :orientation: "vertical"
+            :space-evenly false
+            :icon-size 5
+            :prepend-new true)))
+
+;; CLOCK WIDGETS ;;
+
+(defwidget clock []
+  (box  :orientation "vertical"
+        :class "clock"
+        :halign "center"
+        :valign "center"
+    (button :class "clock-hour"
+      hour)
+    (button :class "clock-min"
+      min)))
+
+(defpoll hour :interval "1s"
+              :initial "initial-value"
+              :run-while time-visible
+  "date '+%H'")
+(defpoll min  :interval "1s"
+              :initial "initial-value"
+              :run-while time-visible
+  "date '+%M'")
+
+;; MUSIC WIDGETS ;;
+;; TBC
+
+
+;; TRAY WIDGETS ;;
+(defwidget tray []
+  (box  :orientation "vertical"
+        :class "tray"
+        :halign "center"
+    ))
+
+;; CONTROL PANEL WIDGETS ;;
+(defwidget control []
+  (box      :orientation "vertical"
+            :class "control"
+            :space-evenly "false"
+            :valign "end"
+            :spacing 5
+    (volume)
+    (brightness)))
+
+;; VOLUME WIDGETS ;;
+(defwidget volume []
+  (eventbox :onhover "${eww} update volume=true"
+            :onhoverlost "${eww} update volume=false"
+  (box      :orientation "vertical"
+            :space-evenly "false" 
+			      :spacing "2"
+  (revealer :transition "slideup"
+            :reveal volume
+            :duration "550ms"
+  (scale    :class "volume-bar"
+            :value current-volume
+            :orientation "vertical"
+            :flipped true
+            :tooltip "Volume: ${current-volume}%"
+            :max 101
+            :min 9
+            :onchange "amixer -D pulse sset Master {}%"))
+  (button   :class "volume-icon" 
+
+    ""))))
+
+(defpoll current-volume :interval "1s" "amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
+(defvar volume false)
+
+;; BRIGHTNESS WIDGETS ;;
+(defwidget brightness []
+  (eventbox :onhover "${eww} update brightness=true"
+            :onhoverlost "${eww} update brightness=false"
+  (box      :orientation "vertical"
+            :space-evenly "false" 
+			      :spacing "2"
+  (revealer :transition "slideup"
+            :reveal brightness
+            :duration "550ms"
+  (scale    :class "brightness-bar"
+            :value current-brightness
+            :orientation "vertical"
+            :flipped true
+            :tooltip "brightness: ${current-brightness}%"
+            :max 100
+            :min 0
+            :onchange "brightnessctl set {}%"))
+  (label    :class "brightness-icon"
+            :halign "center"
+            :text "󰃞"))))
+(defpoll current-brightness :interval "1s" "brightnessctl -m -d amdgpu_bl0 | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
+(defvar brightness false)
