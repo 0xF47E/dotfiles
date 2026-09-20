@@ -271,6 +271,8 @@ layout {
 spawn-at-startup "waybar" "-c" "~/.config/waybar/config.jsonc"
 spawn-at-startup "waybar"
 spawn-at-startup "mako"
+spawn-at-startup "swaybg"
+spawn-at-startup "swaybg" "-i" "~/.config/wallpapers/stars-arm.png" "-m" "fill"
 spawn-at-startup "swayidle" "-w" "timeout" "601" "niri msg action power-off-monitors" "timeout" "600" "swaylock -f" "before-sleep" "swaylock -f"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
@@ -344,9 +346,19 @@ window-rule {
 
 // Example: enable rounded corners for all windows.
 // (This example rule is commented out with a "/-" in front.)
-/-window-rule {
+window-rule {
     geometry-corner-radius 12
     clip-to-geometry true
+}
+
+window-rule {
+    match is-active=false
+    opacity 0.85
+}
+
+window-rule {
+    match is-active=true
+    opacity 0.85
 }
 
 binds {
