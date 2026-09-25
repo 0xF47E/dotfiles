@@ -8,7 +8,8 @@
     "spacing": 0, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
-        "niri/workspaces"
+        "sway/workspaces",
+	"sway/mode"
     ],
     "modules-center": [
 	"clock"
@@ -23,11 +24,12 @@
         "battery#bat2",
         "tray"
     ],
-    "niri/workspaces": {
+    "sway/workspaces": {
 	"on-click": "activate",
         "format": "{icon}",
         "format-icons": {
 	    "default": "",
+	    "focused": "",
             "1": "1",
             "2": "2",
             "3": "3",
